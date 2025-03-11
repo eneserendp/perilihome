@@ -9,32 +9,37 @@ const Menu = () => {
 
   const menuItems = [
     {
-      name: "Dana Rosto",
-      price: "280 TL",
-      description: "Lokum gibi dana rosto, özel baharatlar ve sebzelerle. Yanında pilav ve közlenmiş sebzeler ile servis edilir.",
-      image: "/peri1.jpeg", // Instagram'daki dana rosto fotoğrafı
-      category: "Ana Yemek"
+      name: "Ev Yapımı Cevizli Baklava",
+      price: "700 TL/kg",
+      description: "Özel şerbeti ve bol cevizi ile geleneksel el yapımı baklava.",
+      image: "/baklava.jpg",
+      category: "Tatlı",
+      unit: "kg"
     },
     {
-      name: "Domates Çorbası",
-      price: "120 TL",
-      description: "Taze domatesler ile hazırlanan geleneksel çorba. Kızarmış ekmek ile servis edilir.",
-      image: "/peri2.jpeg", // Instagram'daki domates çorbası fotoğrafı
-      category: "Çorba"
+      name: "İçli Köfte",
+      price: "60 TL/adet",
+      description: "El yapımı, özenle hazırlanmış, nefis içli köfte. Minimum sipariş: 5 adet.",
+      image: "/icli.jpg",
+      category: "Ana Yemek",
+      unit: "adet",
+      minOrder: 5
     },
     {
-      name: "Kuru Fasulye",
-      price: "180 TL",
-      description: "Bol tereyağlı, geleneksel usül pişirilmiş kuru fasulye. Pilav ile servis edilir.",
-      image: "https://i.imgur.com/example3.jpg", // Geçici olarak online görsel kullanıyoruz
-      category: "Ana Yemek"
+      name: "Ev Yapımı Su Böreği",
+      price: "600 TL/kg",
+      description: "Kat kat açılmış, özel peynir karışımı ile hazırlanmış geleneksel su böreği.",
+      image: "/subore.png",
+      category: "Börek",
+      unit: "kg"
     },
     {
-      name: "Fırın Sütlaç",
-      price: "95 TL",
-      description: "Fırında özenle pişirilmiş, üzeri kızarmış geleneksel sütlaç.",
-      image: "https://i.imgur.com/example4.jpg", // Geçici olarak online görsel kullanıyoruz
-      category: "Tatlı"
+      name: "Yaprak Sarması",
+      price: "500 TL/kg",
+      description: "Asma yaprağı ile sarılmış, özel baharatlarla harmanlanmış nefis yaprak sarma.",
+      image: "/sarma.jpg",
+      category: "Ana Yemek",
+      unit: "kg"
     }
   ];
 

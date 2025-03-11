@@ -13,6 +13,14 @@ interface OrderRequest {
   totalPrice: number;
 }
 
+interface ContactRequest {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
 const app = express();
 
 app.use(cors({
@@ -58,7 +66,7 @@ app.post('/api/send-order', async (req: Request<{}, {}, OrderRequest>, res: Resp
 
     const mailOptions = {
       from: 'niltekdeneme@gmail.com',
-      to: 'demirpolateneseren@gmail.com',
+      to: 'demirpolatperihan@gmail.com', // Email değiştirildi
       subject: `Yeni Sipariş - ${req.body.itemName}`,
       html: `
         <h2>Yeni Sipariş Detayları</h2>
@@ -90,6 +98,60 @@ app.post('/api/send-order', async (req: Request<{}, {}, OrderRequest>, res: Resp
     res.status(500).json({ 
       success: false, 
       error: errorMessage
+    });
+  }
+});
+
+app.post('/api/contact', async (req: Request<{}, {}, ContactRequest>, res: Response) => {
+  try {
+    console.log('Received contact form:', req.body);
+
+    // Form validation
+    if (!req.body || !req.body.email || !req.body.message) {
+      return res.status(400).json({
+        success: false,
+        error: 'Required fields are missing'
+      });
+    }
+
+    // Email sending
+    try {
+      await transporter.verify();
+      
+      const info = await transporter.sendMail({
+        from: 'niltekdeneme@gmail.com',
+        to: 'demirpolatperihan@gmail.com', // Email değiştirildi
+        subject: `İletişim Formu: ${req.body.subject}`,
+        html: `
+          <h2>Yeni İletişim Formu Mesajı</h2>
+          <hr>
+          <p><strong>Gönderen:</strong> ${req.body.name}</p>
+          <p><strong>Email:</strong> ${req.body.email}</p>
+          <p><strong>Telefon:</strong> ${req.body.phone}</p>
+          <p><strong>Konu:</strong> ${req.body.subject}</p>
+          <hr>
+          <p><strong>Mesaj:</strong></p>
+          <p>${req.body.message}</p>
+          <hr>
+          <p><em>Gönderim Tarihi: ${new Date().toLocaleString('tr-TR')}</em></p>
+        `
+      });
+
+      console.log('Contact email sent:', info.messageId);
+      
+      return res.status(200).json({
+        success: true,
+        messageId: info.messageId
+      });
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      throw new Error('Email service is unavailable');
+    }
+  } catch (error) {
+    console.error('Contact form error:', error);
+    return res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Internal server error'
     });
   }
 });

@@ -11,24 +11,23 @@ const Home = () => {
       description: "Kışın vazgeçilmezi domates çorbası tarifi 🍅 Püf noktalarıyla birlikte! #perilihome #domatesçorbası",
     },
     {
-      embedUrl: "https://www.instagram.com/reel/DCwp1sbOOwy/embed",
-      title: "KURU FASULYE",
-      description: "Bol tereyağlı enfes kuru fasulye tarifi 🫘 #perilihome #kurufasulye #yemektarifleri",
+      embedUrl: "https://www.instagram.com/reel/DDFO_yQoL3X/embed",
+      title: "BAKLAVALIK YUFKA",
+      description: "El açması baklava yufkası nasıl yapılır? 🍯 İnce açmanın püf noktaları! #perilihome #baklava #yufka",
     }
   ];
 
   return (
     <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative h-screen">
+      <section className="relative h-[60vh] md:h-screen">
         <div className="absolute inset-0 hero-overlay z-10" />
         <img src="/peri2.jpeg" alt="PeriliHome" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 z-20 flex items-center justify-center text-center">
-          <div className="px-4">
-            <h1 className="text-7xl md:text-8xl font-bold text-light mb-6">
+        <div className="absolute inset-0 z-20 flex items-center justify-center text-center px-4">
+          <div>
+            <h1 className="hero-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-light mb-4 md:mb-6 text-glow">
               PERİLİHOME
             </h1>
-            <p className="text-2xl md:text-3xl text-gold font-primary tracking-widest">
+            <p className="hero-subtitle text-xl sm:text-2xl md:text-3xl text-gold font-primary tracking-widest">
               GERÇEK LEZZET TUTKUNLARI İÇİN
             </p>
           </div>
@@ -36,13 +35,13 @@ const Home = () => {
       </section>
 
       {/* Instagram Feed Section */}
-      <section className="bg-secondary py-24">
+      <section className="bg-secondary py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center text-white mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8 md:mb-12">
             INSTAGRAM'DA BİZ
             <div className="w-24 h-1 bg-primary mx-auto mt-4"></div>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12">
             {instagramPosts.map((post, index) => (
               <div key={index} className="bg-white rounded-lg overflow-hidden">
                 <div className="aspect-w-9 aspect-h-16 relative">

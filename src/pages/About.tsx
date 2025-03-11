@@ -6,7 +6,7 @@ const About = () => {
         
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <img src="/about.jpg" alt="Restaurant" className="w-full h-[500px] object-cover" />
+            <img src="/peri1.jpeg" alt="Restaurant" className="w-full h-[500px] object-cover" />
           </div>
           <div className="flex flex-col justify-center">
             <h2 className="text-3xl font-bold text-primary mb-6">Hikayemiz</h2>

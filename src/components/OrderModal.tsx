@@ -8,13 +8,15 @@ type OrderModalProps = {
     name: string;
     price: string;
     description: string;
+    unit: string;
+    minOrder: number;
   } | null;
 };
 
 const OrderModal = ({ isOpen, onClose, item }: OrderModalProps) => {
   if (!isOpen || !item) return null;
 
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(item.minOrder || 1);
   const basePrice = parseInt(item.price.replace(/[^0-9]/g, ''));
   const totalPrice = basePrice * quantity;
 
@@ -72,44 +74,44 @@ const OrderModal = ({ isOpen, onClose, item }: OrderModalProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg w-full max-w-md relative">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 md:p-4">
+      <div className="bg-white rounded-lg w-full max-w-md relative max-h-[90vh] overflow-y-auto">
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-primary"
+          className="absolute top-2 right-2 md:top-4 md:right-4 text-gray-500 hover:text-primary z-10"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div className="p-6">
-          <h3 className="text-2xl font-bold text-secondary mb-4">{item.name}</h3>
-          <p className="text-gray-600 mb-4">{item.description}</p>
+        <div className="p-4 md:p-6">
+          <h3 className="text-xl md:text-2xl font-bold text-secondary mb-2 md:mb-4">{item.name}</h3>
+          <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">{item.description}</p>
           
-          <div className="flex justify-between items-center mb-6">
-            <p className="text-gray-600">Birim Fiyat:</p>
-            <p className="text-xl font-bold text-primary">{item.price}</p>
+          <div className="flex justify-between items-center mb-4 md:mb-6">
+            <p className="text-sm md:text-base text-gray-600">Birim Fiyat:</p>
+            <p className="text-lg md:text-xl font-bold text-primary">{item.price}</p>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-4">
+          <form className="space-y-3 md:space-y-4" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
               <div>
-                <label className="block text-gray-700 mb-2">İsim</label>
+                <label className="block text-gray-700 text-sm md:text-base mb-1">İsim</label>
                 <input 
                   name="firstName"
                   type="text"
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full p-2 text-sm md:text-base border border-gray-300 rounded-md"
                   required
                   placeholder="Adınız"
                 />
               </div>
               <div>
-                <label className="block text-gray-700 mb-2">Soyisim</label>
+                <label className="block text-gray-700 text-sm md:text-base mb-1">Soyisim</label>
                 <input 
                   name="lastName"
                   type="text"
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full p-2 text-sm md:text-base border border-gray-300 rounded-md"
                   required
                   placeholder="Soyadınız"
                 />
@@ -117,67 +119,70 @@ const OrderModal = ({ isOpen, onClose, item }: OrderModalProps) => {
             </div>
 
             <div>
-              <label className="block text-gray-700 mb-2">
-                {item.name === "Dana Rosto" ? "Kilogram" : "Adet"}
+              <label className="block text-gray-700 text-sm md:text-base mb-1">
+                {item.unit === "kg" ? "Kilogram" : "Adet"}
               </label>
               <div className="flex items-center">
                 <input 
                   type="number"
-                  step={item.name === "Dana Rosto" ? "0.5" : "1"}
-                  min={item.name === "Dana Rosto" ? "0.5" : "1"}
-                  defaultValue="1"
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  step={item.unit === "kg" ? "0.5" : "1"}
+                  min={item.name === "İçli Köfte" ? 5 : (item.unit === "kg" ? 0.5 : 1)}
+                  defaultValue={item.name === "İçli Köfte" ? 5 : 1}
+                  className="w-full p-2 text-sm md:text-base border border-gray-300 rounded-md"
                   required
                   onChange={handleQuantityChange}
                 />
-                {item.name === "Dana Rosto" && 
-                  <span className="ml-2 text-gray-600">kg</span>
-                }
+                <span className="ml-2 text-gray-600">{item.unit}</span>
               </div>
+              {item.name === "İçli Köfte" && (
+                <p className="text-xs md:text-sm text-gray-500 mt-1">
+                  Minimum sipariş: 5 adet
+                </p>
+              )}
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg">
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-secondary">Toplam Tutar:</p>
-                <p className="text-2xl font-bold text-primary">{totalPrice} TL</p>
+                <p className="font-bold text-secondary text-sm md:text-base">Toplam Tutar:</p>
+                <p className="text-xl md:text-2xl font-bold text-primary">{totalPrice} TL</p>
               </div>
-              <p className="text-sm text-gray-500 mt-1">
-                {quantity} {item.name === "Dana Rosto" ? "kg" : "adet"} × {basePrice} TL
+              <p className="text-xs md:text-sm text-gray-500 mt-1">
+                {quantity} {item.unit} × {basePrice} TL
               </p>
             </div>
 
             <div>
-              <label className="block text-gray-700 mb-2">Not (Opsiyonel)</label>
+              <label className="block text-gray-700 text-sm md:text-base mb-1">Not (Opsiyonel)</label>
               <textarea 
                 name="note"
                 rows={3}
                 placeholder="Özel isteklerinizi belirtebilirsiniz..."
-                className="w-full p-2 border border-gray-300 rounded-md resize-none"
+                className="w-full p-2 text-sm md:text-base border border-gray-300 rounded-md resize-none"
               ></textarea>
             </div>
             <div>
-              <label className="block text-gray-700 mb-2">İletişim Numaranız</label>
+              <label className="block text-gray-700 text-sm md:text-base mb-1">İletişim Numaranız</label>
               <input 
                 name="phone"
                 type="tel"
                 placeholder="05XX XXX XX XX"
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 text-sm md:text-base border border-gray-300 rounded-md"
                 required
                 pattern="[0-9]{10,11}"
               />
             </div>
             <div>
-              <label className="block text-gray-700 mb-2">Teslimat Adresi</label>
+              <label className="block text-gray-700 text-sm md:text-base mb-1">Teslimat Adresi</label>
               <textarea 
                 name="address"
                 rows={2}
-                className="w-full p-2 border border-gray-300 rounded-md resize-none"
+                className="w-full p-2 text-sm md:text-base border border-gray-300 rounded-md resize-none"
                 required
               ></textarea>
             </div>
             <button 
               type="submit"
-              className="w-full bg-primary text-white py-3 rounded-md hover:bg-secondary transition-colors duration-300"
+              className="w-full bg-primary text-white py-2 md:py-3 rounded-md hover:bg-secondary transition-colors duration-300 text-sm md:text-base"
             >
               {totalPrice} TL - SİPARİŞİ ONAYLA
             </button>
