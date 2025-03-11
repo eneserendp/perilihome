@@ -5,10 +5,11 @@
   "builds": [
     {
       "src": "server/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["server/**"]
-      }
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
     }
   ],
   "routes": [
@@ -17,8 +18,14 @@
       "dest": "/server/index.ts"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
