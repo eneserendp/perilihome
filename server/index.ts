@@ -15,11 +15,10 @@ interface OrderRequest {
 
 const app = express();
 
-// CORS ayarlarını güncelle
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174'], // Her iki port için izin ver
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Accept', 'Access-Control-Allow-Origin'],
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://perilihome.vercel.app' 
+    : 'http://localhost:5173',
   credentials: true
 }));
 
@@ -35,8 +34,8 @@ app.get('/', (_req: Request, res: Response) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'niltekdeneme@gmail.com',
-    pass: 'zuxcsyjmhzjsbfyt'
+    user: process.env.EMAIL_USER || 'niltekdeneme@gmail.com',
+    pass: process.env.EMAIL_PASS || 'zuxcsyjmhzjsbfyt'
   }
 });
 
