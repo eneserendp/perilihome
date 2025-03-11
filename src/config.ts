@@ -1,8 +1,8 @@
 const isDevelopment = import.meta.env.DEV;
 
-export const API_URL = isDevelopment 
-  ? 'http://localhost:3000/api'
-  : 'https://perilihome.vercel.app/api';
+export const API_URL = process.env.NODE_ENV === 'production'
+  ? 'https://perilihome.vercel.app/api'
+  : 'http://localhost:3000/api';
 
 export const config = {
   apiUrl: API_URL,
