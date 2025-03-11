@@ -5,9 +5,9 @@
   "type": "commonjs",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
-    "server": "nodemon -x ts-node --files server/index.ts",
+    "server": "ts-node --project server/tsconfig.json server/index.ts",
     "start": "concurrently \"npm run dev\" \"npm run server\""
   },
   "dependencies": {
